@@ -6,6 +6,34 @@
   --aes-primary: #7c3aed;
   --aes-secondary: #a78bfa;
 }
+
+
+/* Force full-text sections (encrypt + decrypt) to stack vertically */
+.aes-section--fulltext {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Inside those, form groups are also vertical */
+.aes-section--fulltext .aes-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Re-use for key, IV, CTR, file rows: input + buttons */
+.aes-input-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.aes-input-row .aes-input {
+  flex: 1;
+}
+
 /* Smooth transitions for theme switching */
 * {
   transition: background-color 0.3s ease, 

@@ -13,7 +13,6 @@ import {
 } from "../ts/aesEngine";
 
 // ---- type imports ----
-// These types describe the shape of what the BACKEND should return.
 import type {
   AesBlockMode,
   MultiBlockDecryptionResult,
@@ -130,7 +129,6 @@ const AESFullTextDecryption: React.FC = () => {
       case "decimal":
         return bytesToDecimal(bytes);
       case "ascii":
-        // interpret each byte as a character
         return String.fromCharCode(...bytes);
       case "hex":
       default:
@@ -644,7 +642,8 @@ const AESFullTextDecryption: React.FC = () => {
             </label>
           </div>
 
-          <div className="aes-section">
+          {/* NOTE: added aes-section--fulltext here */}
+          <div className="aes-section aes-section--fulltext">
             <h3 className="aes-section-title">
               Full TEXT decryption (5 modes)
             </h3>
@@ -670,7 +669,7 @@ const AESFullTextDecryption: React.FC = () => {
               </p>
             </div>
 
-            {/* IV BELOW MODE, WITH COPY BUTTON */}
+            {/* IV BELOW MODE, WITH COPY + RANDOM BUTTONS */}
             {(mode === "CBC" || mode === "CFB" || mode === "OFB") && (
               <div className="aes-form-group">
                 <label className="aes-label">
@@ -707,7 +706,7 @@ const AESFullTextDecryption: React.FC = () => {
               </div>
             )}
 
-            {/* CTR BELOW MODE, WITH COPY BUTTON */}
+            {/* CTR BELOW MODE, WITH COPY + RANDOM BUTTONS */}
             {mode === "CTR" && (
               <div className="aes-form-group">
                 <label className="aes-label">
@@ -749,7 +748,6 @@ const AESFullTextDecryption: React.FC = () => {
               </div>
             )}
 
-            {/* rest unchanged */}
             <div className="aes-form-group">
               <label className="aes-label">
                 Upload encrypted file (optional)

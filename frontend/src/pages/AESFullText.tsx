@@ -102,7 +102,6 @@ const AESFullText: React.FC = () => {
     return bytesToHex(arr);
   };
 
-  ///////////////////////////
   const persistKeyForSharing = (): string | null => {
     const normalizedKey = keyHex.replace(/\s+/g, "");
     if (!normalizedKey) {
@@ -138,7 +137,6 @@ const AESFullText: React.FC = () => {
     }
     navigate("/aes/decrypt/full-text");
   };
-  ///////////////////////////
 
   const handleKeySizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value) as KeySize;
@@ -335,7 +333,7 @@ const AESFullText: React.FC = () => {
       const text = await file.text();
       setFullPlaintext(text);
       setUploadedFileName(file.name);
-      setInputFormat("ascii"); // file = normal text by default
+      setInputFormat("ascii");
       setMultiError(null);
       showToast(`File "${file.name}" loaded successfully`);
     } catch (err) {
@@ -389,7 +387,6 @@ const AESFullText: React.FC = () => {
       let normalizedPlaintext: string;
 
       if (inputFormat === "hex") {
-        // Validate hex input
         if (!hexOnlyRegex.test(fullPlaintext)) {
           throw new Error("Plaintext must be hexadecimal (0–9, A–F) only.");
         }
@@ -401,7 +398,6 @@ const AESFullText: React.FC = () => {
           );
         }
       } else {
-        // ASCII input → convert to hex before sending to backend
         const encoder = new TextEncoder();
         const bytes = Array.from(encoder.encode(fullPlaintext));
         normalizedPlaintext = bytesToHex(bytes);
@@ -419,7 +415,6 @@ const AESFullText: React.FC = () => {
         );
       }
 
-      // IV validation for CBC/CFB/OFB
       if (
         (mode === "CBC" || mode === "CFB" || mode === "OFB") &&
         ivHex &&
@@ -428,7 +423,6 @@ const AESFullText: React.FC = () => {
         throw new Error("IV must be hexadecimal (0–9, A–F) only.");
       }
 
-      // CTR validation (if user provided a non-empty counter)
       if (mode === "CTR" && ctrCounterHex && !hexOnlyRegex.test(ctrCounterHex)) {
         throw new Error("CTR counter must be hexadecimal (0–9, A–F) only.");
       }
@@ -606,9 +600,7 @@ const AESFullText: React.FC = () => {
                 />
                 <button
                   type="button"
-                  onClick={() =>
-                    setKeyHex(generateRandomHex(expectedKeyBytes))
-                  }
+                  onClick={() => setKeyHex(generateRandomHex(expectedKeyBytes))}
                   className="aes-button aes-button--ghost"
                 >
                   Random
@@ -624,7 +616,8 @@ const AESFullText: React.FC = () => {
             </label>
           </div>
 
-          <div className="aes-section">
+          {/* NOTE: added aes-section--fulltext here */}
+          <div className="aes-section aes-section--fulltext">
             <h3 className="aes-section-title">
               Full TEXT encryption (5 modes)
             </h3>
@@ -635,9 +628,7 @@ const AESFullText: React.FC = () => {
                 Mode
                 <select
                   value={mode}
-                  onChange={(e) =>
-                    setMode(e.target.value as AesBlockMode)
-                  }
+                  onChange={(e) => setMode(e.target.value as AesBlockMode)}
                   className="aes-select"
                 >
                   <option value="ECB">AES-ECB</option>
@@ -652,7 +643,7 @@ const AESFullText: React.FC = () => {
               </p>
             </div>
 
-            {/* IV BELOW MODE, WITH COPY BUTTON */}
+            {/* IV BELOW MODE, WITH COPY + RANDOM BUTTONS */}
             {(mode === "CBC" || mode === "CFB" || mode === "OFB") && (
               <div className="aes-form-group">
                 <label className="aes-label">
@@ -689,7 +680,7 @@ const AESFullText: React.FC = () => {
               </div>
             )}
 
-            {/* CTR BELOW MODE, WITH COPY BUTTON */}
+            {/* CTR BELOW MODE, WITH COPY + RANDOM BUTTONS */}
             {mode === "CTR" && (
               <div className="aes-form-group">
                 <label className="aes-label">
