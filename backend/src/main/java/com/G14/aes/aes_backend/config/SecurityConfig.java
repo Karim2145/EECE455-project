@@ -42,7 +42,7 @@ public class SecurityConfig {
         // Allow local dev + Railway
         config.setAllowedOriginPatterns(List.of(
                 "http://localhost:5173",
-                "https://*.railway.app"
+                "https://aesapplicationg14.up.railway.app"
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
