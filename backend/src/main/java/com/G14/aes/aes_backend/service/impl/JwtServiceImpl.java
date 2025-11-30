@@ -18,7 +18,7 @@ public class JwtServiceImpl implements JwtService {
     private static final String SECRET =
             System.getenv().getOrDefault(
                     "JWT_SECRET",
-                    "dev-only-secret-change-me-12345678901234567890"
+                    "Z4qH7nL2vR9eA5tJ0yW3sF8cP1mD6kB4uT7xG2pV9rQ5fN8hL3jC0wS4bE1a"
             );
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
