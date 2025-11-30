@@ -142,7 +142,9 @@ Features include:
 
         Sensitive fields like key and plaintext are intentionally hidden.
 
-🗂 Project Structure
+## 🗂 Project Structure
+
+```txt
 aes-encryption-app/
 │
 ├── Backend AES
@@ -159,6 +161,8 @@ aes-encryption-app/
     │   ├── api/        → axios client + interceptors
     │   ├── components/ → reusable UI components
     │   └── contexts/   → Theme/Auth contexts
+```
+
 
 ☁️ Deployment (Railway)
 
