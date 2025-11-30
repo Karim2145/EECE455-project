@@ -7,6 +7,44 @@
   --aes-secondary: #a78bfa;
 }
 
+/* TIGHTER SPACING FOR FULL TEXT SECTIONS ONLY */
+.aes-section--fulltext {
+  gap: 10px !important; /* reduce space between big blocks */
+}
+
+/* Reduce space inside each form-group */
+.aes-section--fulltext .aes-form-group {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 4px !important;
+}
+
+/* Labels closer to inputs */
+.aes-section--fulltext .aes-label {
+  margin-bottom: 2px !important;
+}
+
+/* Help text closer to fields */
+.aes-section--fulltext .aes-help {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Input rows (IV, CTR, file, etc.) */
+.aes-section--fulltext .aes-input-row {
+  gap: 6px !important;
+  margin-top: 2px !important;
+}
+
+/* Reduce textarea spacing */
+.aes-section--fulltext .aes-textarea {
+  margin-top: 2px !important;
+}
+
+/* Slightly reduce padding around this whole section */
+.aes-panel--left .aes-section--fulltext {
+  padding-top: 6px !important;
+}
 
 /* Force full-text sections (encrypt + decrypt) to stack vertically */
 .aes-section--fulltext {
