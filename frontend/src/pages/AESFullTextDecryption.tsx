@@ -649,86 +649,107 @@ const AESFullTextDecryption: React.FC = () => {
               Full TEXT decryption (5 modes)
             </h3>
 
-            <div className="aes-form-grid">
-              <div className="aes-form-group">
-                <label className="aes-label">
-                  Mode
-                  <select
-                    value={mode}
-                    onChange={(e) =>
-                      setMode(e.target.value as AesBlockMode)
-                    }
-                    className="aes-select"
-                  >
-                    <option value="ECB">AES-ECB</option>
-                    <option value="CBC">AES-CBC</option>
-                    <option value="CFB">AES-CFB</option>
-                    <option value="OFB">AES-OFB</option>
-                    <option value="CTR">AES-CTR (counter)</option>
-                  </select>
-                </label>
-                <p className="aes-help">
-                  For CBC/CFB/OFB set IV, for CTR set initial counter.
-                </p>
-              </div>
-
-              {(mode === "CBC" || mode === "CFB" || mode === "OFB") && (
-                <div className="aes-form-group">
-                  <label className="aes-label">
-                    Initialization Vector (IV, hex, optional)
-                    <div className="aes-input-row">
-                      <input
-                        className="aes-input"
-                        type="text"
-                        value={ivHex}
-                        onChange={(e) => setIvHex(e.target.value)}
-                        placeholder="If empty: 16 zero bytes"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setIvHex(generateRandomHex(16))}
-                        className="aes-button aes-button--ghost"
-                      >
-                        Random
-                      </button>
-                    </div>
-                  </label>
-                  <p className="aes-help">
-                    Must match the IV used during encryption.
-                  </p>
-                </div>
-              )}
-
-              {mode === "CTR" && (
-                <div className="aes-form-group">
-                  <label className="aes-label">
-                    Initial counter (hex, optional)
-                    <div className="aes-input-row">
-                      <input
-                        className="aes-input"
-                        type="text"
-                        value={ctrCounterHex}
-                        onChange={(e) => setCtrCounterHex(e.target.value)}
-                        placeholder="If empty, counter = all zeroes"
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setCtrCounterHex(generateRandomHex(16))
-                        }
-                        className="aes-button aes-button--ghost"
-                      >
-                        Random
-                      </button>
-                    </div>
-                  </label>
-                  <p className="aes-help">
-                    If longer than 16 bytes, last 16 bytes are used.
-                  </p>
-                </div>
-              )}
+            {/* Mode selector */}
+            <div className="aes-form-group">
+              <label className="aes-label">
+                Mode
+                <select
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value as AesBlockMode)}
+                  className="aes-select"
+                >
+                  <option value="ECB">AES-ECB</option>
+                  <option value="CBC">AES-CBC</option>
+                  <option value="CFB">AES-CFB</option>
+                  <option value="OFB">AES-OFB</option>
+                  <option value="CTR">AES-CTR (counter)</option>
+                </select>
+              </label>
+              <p className="aes-help">
+                For CBC/CFB/OFB set IV, for CTR set initial counter.
+              </p>
             </div>
 
+            {/* IV BELOW MODE, WITH COPY BUTTON */}
+            {(mode === "CBC" || mode === "CFB" || mode === "OFB") && (
+              <div className="aes-form-group">
+                <label className="aes-label">
+                  Initialization Vector (IV, hex, optional)
+                  <div className="aes-input-row">
+                    <input
+                      className="aes-input"
+                      type="text"
+                      value={ivHex}
+                      onChange={(e) => setIvHex(e.target.value)}
+                      placeholder="If empty: 16 zero bytes"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setIvHex(generateRandomHex(16))}
+                      className="aes-button aes-button--ghost"
+                    >
+                      Random
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleCopy(ivHex.replace(/\s+/g, ""), "IV")
+                      }
+                      className="aes-button aes-button--ghost"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </label>
+                <p className="aes-help">
+                  Must match the IV used during encryption.
+                </p>
+              </div>
+            )}
+
+            {/* CTR BELOW MODE, WITH COPY BUTTON */}
+            {mode === "CTR" && (
+              <div className="aes-form-group">
+                <label className="aes-label">
+                  Initial counter (hex, optional)
+                  <div className="aes-input-row">
+                    <input
+                      className="aes-input"
+                      type="text"
+                      value={ctrCounterHex}
+                      onChange={(e) => setCtrCounterHex(e.target.value)}
+                      placeholder="If empty, counter = all zeroes"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCtrCounterHex(generateRandomHex(16))
+                      }
+                      className="aes-button aes-button--ghost"
+                    >
+                      Random
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleCopy(
+                          ctrCounterHex.replace(/\s+/g, ""),
+                          "CTR counter"
+                        )
+                      }
+                      className="aes-button aes-button--ghost"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </label>
+                <p className="aes-help">
+                  If longer than 16 bytes, last 16 bytes are used.
+                </p>
+              </div>
+            )}
+
+            {/* rest unchanged */}
             <div className="aes-form-group">
               <label className="aes-label">
                 Upload encrypted file (optional)
