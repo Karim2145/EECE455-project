@@ -1,7 +1,7 @@
 // client/src/pages/Login.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/client";
 import "../css/auth.css";
 
 
@@ -37,34 +37,36 @@ if (!strongPwRegex.test(password)) {
     setIsSubmitting(true);
 
     try {
-      // Call your backend API
-      const response = await axios.post("http://localhost:8080/auth/login",  {
-        email,
-        password,
-      });
+  setIsSubmitting(true);
+  setError(null);
 
-      // Store tokens in localStorage
-      localStorage.setItem("authToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      
-      // Store user data if needed
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+  // Call backend
+  const response = await api.post("/auth/login", {
+    email,
+    password,
+  });
 
-      // Success - redirect to home
-      console.log("Login successful:", response.data);
-      navigate("/home");
+  const { accessToken, refreshToken, user } = response.data;
 
-    } catch (err: any) {
-      console.error("Login error:", err);
-      
-      // Display error message from backend
-      const errorMessage = err.response?.data?.message || 
-                          err.response?.data?.error || 
-                          "Login failed. Please try again.";
-      setError(errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
+  // store tokens + user (Dashboard expects "authToken")
+  localStorage.setItem("authToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
+  localStorage.setItem("user", JSON.stringify(user));
+
+  console.log("Login successful:", response.data);
+  navigate("/home");
+} catch (err: any) {
+  console.error("Login error:", err);
+
+  const errorMessage =
+    err.response?.data?.message ||
+    err.response?.data?.error ||
+    "Login failed. Please try again.";
+
+  setError(errorMessage);
+} finally {
+  setIsSubmitting(false);
+}
   };
 
   return (

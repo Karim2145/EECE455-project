@@ -1,10 +1,9 @@
 // client/src/pages/Signup.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "../css/auth.css";
 
-const API_URL = "http://localhost:8080";
+import "../css/auth.css";
+import api from "../api/client";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -42,10 +41,10 @@ const Signup: React.FC = () => {
 
     try {
       // Call backend API
-      const response = await axios.post(`${API_URL}/auth/signup`, {
+      const response = await api.post("/auth/signup", {
         email,
         password: pw1,
-      });
+        });
 
       console.log("Signup successful:", response.data);
       setSuccess("Account created successfully! Redirecting...");
