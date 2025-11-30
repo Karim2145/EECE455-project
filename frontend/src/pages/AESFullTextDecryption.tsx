@@ -438,7 +438,7 @@ const AESFullTextDecryption: React.FC = () => {
       };
 
       const response = await api.post<MultiBlockDecryptionResult>(
-        "/aes/decrypt-full-text",
+        "api/aes/decrypt-full-text",
         payload
       );
 

@@ -43,7 +43,7 @@ export default function Dashboard() {
       }
 
       // ✅ use api client (baseURL already includes /api)
-      const response = await api.get<EncryptionRecord[]>("/history");
+      const response = await api.get<EncryptionRecord[]>("api/history");
       setHistory(response.data);
     } catch (err: any) {
       console.error("Failed to fetch history:", err);
@@ -74,7 +74,7 @@ export default function Dashboard() {
       }
 
       // ✅ use api client
-      await api.delete(`/history/${id}`);
+      await api.delete(`api/history/${id}`);
       setHistory(history.filter((item) => item.id !== id));
     } catch (err: any) {
       console.error("Failed to delete item:", err);
@@ -99,7 +99,7 @@ export default function Dashboard() {
       }
 
       // ✅ use api client
-      await api.delete("/history/all");
+      await api.delete("api/history/all");
       setHistory([]);
     } catch (err: any) {
       console.error("Failed to delete all:", err);

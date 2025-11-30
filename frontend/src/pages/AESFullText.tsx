@@ -444,7 +444,7 @@ const AESFullText: React.FC = () => {
       };
 
       const response = await api.post<MultiBlockEncryptionResult>(
-        "/aes/encrypt-full-text",
+        "api/aes/encrypt-full-text",
         payload
       );
 
