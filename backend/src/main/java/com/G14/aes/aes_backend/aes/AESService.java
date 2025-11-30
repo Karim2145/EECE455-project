@@ -171,9 +171,9 @@ public class AESService {
                 .algorithm("AES-" + keySize)
                 .mode(mode)
                 .operation("ENCRYPT")
-                .plaintext(request.getPlaintext())
+                .plaintext("No data to show")
                 .ciphertext(result.getCiphertextHex())
-                .keyUsed(request.getKeyHex())
+                .keyUsed("No data to show")
                 .userEmail(userEmail)
                 .blockCount(blockCount)
                 .ivUsed(request.getIvHex())              // NULL is allowed
@@ -310,9 +310,9 @@ public class AESService {
                 .algorithm("AES-" + keySize)
                 .mode(mode)
                 .operation("DECRYPT")
-                .plaintext(plaintext)
+                .plaintext("No Data to show")
                 .ciphertext(request.getCiphertextHex())
-                .keyUsed(request.getKeyHex())
+                .keyUsed("No Data to show")
                 .userEmail(userEmail)
                 .blockCount(blockCount)
                 .ivUsed(request.getIvHex())              // NULL allowed
